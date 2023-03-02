@@ -1,0 +1,15 @@
+# keycloak
+kc_url                              = "https://localhost:8443"
+kc_username                         = "admin"
+kc_password                         = "admin"
+kc_client_id                        = "admin-cli"
+kc_tls_insecure_skip_verify         = true
+kc_oidc_client_kibana_name          = "kibana"
+kc_oidc_client_kibana_url           = "https://localhost:5601/"
+kc_oidc_client_kibana_client_secret = "kibana93a78811-3f98-4893-bd84-61f7618da03b"
+
+# elasticstack
+elk_elasticsearch_username  = "elastic"
+elk_elasticsearch_password  = "changeme"
+elk_elasticsearch_ca_file   = "../certs/ca/ca.crt"
+elk_elasticsearch_endpoints = ["https://localhost:9200"]

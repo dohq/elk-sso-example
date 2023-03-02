@@ -1,0 +1,97 @@
+services:
+  keycloak:
+    container_name: keycloak
+    command: start --optimized
+    build:
+      dockerfile: ./keycloak/Dockerfile
+      args:
+        KC_VER: "${KC_VER}"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+    - "8443:8443"
+    depends_on:
+    - postgres
+
+  postgres:
+    image: postgres:${PG_VER}
+    container_name: postgres
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    volumes:
+    - type: volume
+      source: postgres-data
+      target: /var/lib/postgresql/data
+
+  create_certs:
+    container_name: create_certs
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VER}
+    command: >
+      bash -c '
+        if [[ ! -f /certs/bundle.zip ]]; then
+          bin/elasticsearch-certutil cert --silent --pem --in config/certificates/instances.yml -out /certs/bundle.zip;
+          unzip /certs/bundle.zip -d /certs; 
+        fi;
+        chown -R 1000:0 /certs
+      '
+    user: "0"
+    working_dir: /usr/share/elasticsearch
+    volumes:
+    - type: bind
+      source: ./certs
+      target: /certs
+    - type: bind
+      source: ./elasticsearch/instances.yml
+      target: /usr/share/elasticsearch/config/certificates/instances.yml
+
+
+  elasticsearch:
+    build:
+      dockerfile: ./elasticsearch/Dockerfile
+      args:
+        ELK_VER: "${ELK_VER}"
+        ELK_KC_CLIENT_SECRET: "${ELK_KC_CLIENT_SECRET}"
+    container_name: elasticsearch
+    environment:
+      ELASTIC_PASSWORD: changeme
+      ES_JAVA_OPTS: -Xms1024m -Xmx1024m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+    - type: volume
+      source: es_data
+      target: /usr/share/elasticsearch/data
+    - type: bind
+      source: ./certs
+      target: /usr/share/elasticsearch/config/certificates
+    - type: bind
+      source: ./elasticsearch/elasticsearch.yml
+      target: /usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+    - "9200:9200"
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${ELK_VER}
+    container_name: kibana
+    ports:
+    - "5601:5601"
+    volumes:
+    - type: bind
+      source: ./certs/kibana
+      target: /usr/share/kibana/config/certs
+    - type: bind
+      source: ./certs/ca/ca.crt
+      target: /usr/share/kibana/config/certs/ca.crt
+    - type: bind
+      source: ./kibana/kibana.yml
+      target: /usr/share/kibana/config/kibana.yml
+    depends_on:
+      - elasticsearch
+
+volumes:
+  postgres-data:
+  es_data:

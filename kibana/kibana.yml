@@ -1,0 +1,25 @@
+server:
+  name: kibana
+  host: 0.0.0.0
+  ssl:
+    enabled: true
+    certificate: /usr/share/kibana/config/certs/kibana.crt
+    key: /usr/share/kibana/config/certs/kibana.key
+elasticsearch:
+  hosts:
+    - https://elasticsearch:9200
+  username: elastic
+  password: changeme
+  ssl:
+    certificateAuthorities:
+      - /usr/share/kibana/config/certs/ca.crt
+xpack:
+  security:
+    authc.providers:
+      oidc.keycloak:
+        order: 0
+        realm: "keycloak"
+        description: "Login with Keycloak"
+        icon: https://upload.wikimedia.org/wikipedia/commons/2/29/Keycloak_Logo.png
+      basic.basic1:
+        order: 1
