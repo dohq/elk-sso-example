@@ -38,12 +38,12 @@ xpack:
         rp.client_id: "kibana"
         rp.response_type: "code"
         rp.redirect_uri: "https://localhost:5601/api/security/oidc/callback"
-        op.issuer: "https://localhost:8443/realms/psp"
-        op.authorization_endpoint: "https://localhost:8443/realms/psp/protocol/openid-connect/auth"
-        op.token_endpoint: "https://keycloak:8443/realms/psp/protocol/openid-connect/token"
-        op.jwkset_path: "https://keycloak:8443/realms/psp/protocol/openid-connect/certs"
-        op.userinfo_endpoint: "https://keycloak:8443/realms/psp/protocol/openid-connect/userinfo"
-        op.endsession_endpoint: "https://localhost:8443/realms/psp/protocol/openid-connect/logout"
+        op.issuer: "https://localhost:8443/realms/dummy"
+        op.authorization_endpoint: "https://localhost:8443/realms/dummy/protocol/openid-connect/auth"
+        op.token_endpoint: "https://keycloak:8443/realms/dummy/protocol/openid-connect/token"
+        op.jwkset_path: "https://keycloak:8443/realms/dummy/protocol/openid-connect/certs"
+        op.userinfo_endpoint: "https://keycloak:8443/realms/dummy/protocol/openid-connect/userinfo"
+        op.endsession_endpoint: "https://localhost:8443/realms/dummy/protocol/openid-connect/logout"
         rp.post_logout_redirect_uri: "https://localhost:5601/security/logged_out"
         claims.principal: preferred_username
         claims.mail: email
