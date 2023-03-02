@@ -5,6 +5,8 @@ However, my knowledge of OpenID Connect is almost nothing:)
 
 ## Usage
 ```
+docker compose pull
+docker compose up create_certs
 docker compose up -d
 cd terraform
 mv terraform.tfvars_example terraform.tfvars
