@@ -47,7 +47,6 @@ services:
       source: ./elasticsearch/instances.yml
       target: /usr/share/elasticsearch/config/certificates/instances.yml
 
-
   elasticsearch:
     build:
       dockerfile: ./elasticsearch/Dockerfile
@@ -74,6 +73,7 @@ services:
       target: /usr/share/elasticsearch/config/elasticsearch.yml
     ports:
     - "9200:9200"
+
   kibana:
     image: docker.elastic.co/kibana/kibana:${ELK_VER}
     container_name: kibana
