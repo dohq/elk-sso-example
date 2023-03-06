@@ -7,7 +7,6 @@ resource "keycloak_user" "admin1" {
   initial_password {
     value = "admin1"
   }
-
 }
 
 resource "keycloak_user" "guest1" {
