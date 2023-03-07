@@ -1,12 +1,15 @@
 # keycloak
-kc_url                              = "https://localhost:8443"
-kc_username                         = "admin"
-kc_password                         = "admin"
-kc_client_id                        = "admin-cli"
-kc_tls_insecure_skip_verify         = true
-kc_oidc_client_kibana_name          = "kibana"
-kc_oidc_client_kibana_url           = "https://localhost:5601/"
-kc_oidc_client_kibana_client_secret = "kibana93a78811-3f98-4893-bd84-61f7618da03b"
+kc_url                                    = "https://localhost:8443"
+kc_username                               = "admin"
+kc_password                               = "admin"
+kc_client_id                              = "admin-cli"
+kc_tls_insecure_skip_verify               = true
+kc_oidc_client_kibana_name                = "kibana"
+kc_oidc_client_kibana_url                 = "https://localhost:5601/"
+kc_oidc_client_kibana_client_secret       = "kibana93a78811-3f98-4893-bd84-61f7618da03b"
+kc_oidc_client_oauth2_proxy_name          = "oauth2_proxy"
+kc_oidc_client_oauth2_proxy_url           = "http://localhost:4180/"
+kc_oidc_client_oauth2_proxy_client_secret = "oauth2_proxy"
 
 # elasticstack
 elk_elasticsearch_username  = "elastic"
