@@ -31,6 +31,19 @@ variable "kc_oidc_client_kibana_client_secret" {
   type = string
 }
 
+# oidc Debugger
+variable "kc_oidc_client_oauth2_proxy_name" {
+  type = string
+}
+
+variable "kc_oidc_client_oauth2_proxy_client_secret" {
+  type = string
+}
+
+variable "kc_oidc_client_oauth2_proxy_url" {
+  type = string
+}
+
 # elasticstack
 variable "elk_elasticsearch_username" {
   type = string

@@ -3,6 +3,7 @@ resource "keycloak_user" "admin1" {
   username       = "admin1"
   enabled        = true
   email_verified = true
+  email          = "admin1@example.com"
 
   initial_password {
     value = "admin1"
@@ -14,6 +15,7 @@ resource "keycloak_user" "guest1" {
   username       = "guest1"
   enabled        = true
   email_verified = true
+  email          = "guest1@example.com"
 
   initial_password {
     value = "guest1"
