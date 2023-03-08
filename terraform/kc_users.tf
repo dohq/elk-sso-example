@@ -39,3 +39,27 @@ resource "keycloak_user_roles" "guest1" {
     keycloak_role.elk_guest_role.id,
   ]
 }
+
+resource "keycloak_user" "admin2" {
+  realm_id       = keycloak_realm.dummy.id
+  username       = "admin2"
+  enabled        = true
+  email_verified = true
+  email          = "admin2@example.com"
+
+  initial_password {
+    value = "admin2"
+  }
+}
+
+resource "keycloak_user" "guest2" {
+  realm_id       = keycloak_realm.dummy.id
+  username       = "guest2"
+  enabled        = true
+  email_verified = true
+  email          = "guest2@example.com"
+
+  initial_password {
+    value = "guest2"
+  }
+}
