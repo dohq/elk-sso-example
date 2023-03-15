@@ -8,6 +8,8 @@ discovery:
   type: single-node
 network:
   host: 0.0.0.0
+path:
+  logs: /usr/share/elasticsearch/logs
 xpack:
   license:
     self_generated:
@@ -17,6 +19,12 @@ xpack:
       enabled: true
   security:
     enabled: true
+    audit:
+      enabled: true
+      logfile:
+        events:
+          include: ["authentication_success"]
+          emit_request_body: true
     http:
       ssl:
         enabled: true

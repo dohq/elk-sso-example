@@ -23,3 +23,16 @@ xpack:
         icon: https://upload.wikimedia.org/wikipedia/commons/2/29/Keycloak_Logo.png
       basic.basic1:
         order: 1
+    audit:
+      enabled: true
+      appender:
+        type: rolling-file
+        fileName: /usr/share/kibana/logs/audit_log.json
+        policy:
+          type: time-interval
+          interval: 24h
+        strategy:
+          type: numeric
+          max: 10
+        layout:
+          type: json

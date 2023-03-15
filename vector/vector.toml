@@ -1,0 +1,95 @@
+[api]
+enabled = true
+address = "0.0.0.0:8686"
+
+[sources.src_kc_log]
+type = "file"
+include = ["/opt/keycloak/data/log/keycloak.log"]
+
+[sources.src_es_log]
+type = "file"
+include = ["/usr/share/elasticsearch/logs/docker-cluster_audit.json"]
+
+[sources.src_kibana_log]
+type = "file"
+include = ["/usr/share/kibana/logs/audit_log.json"]
+
+[transforms.tf_kc_log]
+inputs = [ "src_kc_log" ]
+type = "remap"
+drop_on_abort = true
+timezone = "Asia/Tokyo"
+source = """
+. = parse_json!(.message)
+if .loggerName == "org.keycloak.events" {
+  ., err = merge(., parse_key_value!(.message, field_delimiter:","), deep: true)
+  del(.message)
+  del(.threadName)
+  del(.threadId)
+  del(.sequence)
+  del(.processId)
+  del(.processName)
+  del(.ndc)
+  del(.mdc)
+} else {
+  del(.)
+}
+"""
+
+[transforms.tf_es_log]
+inputs = [ "src_es_log"]
+type = "remap"
+drop_on_abort = true
+timezone = "Asia/Tokyo"
+source = """
+. = parse_json!(.message)
+"""
+
+[transforms.tf_kibana_log]
+inputs = [ "src_kibana_log"]
+type = "remap"
+drop_on_abort = true
+timezone = "Asia/Tokyo"
+source = """
+. = parse_json!(.message)
+"""
+
+[sinks.snk_kc_log_to_es]
+type = "elasticsearch"
+inputs = ["tf_kc_log"]
+auth.strategy = "basic"
+auth.user = "elastic"
+auth.password = "changeme"
+bulk.index = "keycloak-log-%Y.%m.%d"
+endpoints = ["https://elasticsearch:9200"]
+tls.verify_certificate = false
+tls.verify_hostname = false
+
+[sinks.snk_es_log_to_es]
+type = "elasticsearch"
+inputs = ["tf_es_log"]
+auth.strategy = "basic"
+auth.user = "elastic"
+auth.password = "changeme"
+bulk.index = "elasticsearch-audit-log-%Y.%m.%d"
+endpoints = ["https://elasticsearch:9200"]
+tls.verify_certificate = false
+tls.verify_hostname = false
+
+[sinks.snk_kibana_log_to_es]
+type = "elasticsearch"
+inputs = ["tf_kibana_log"]
+auth.strategy = "basic"
+auth.user = "elastic"
+auth.password = "changeme"
+bulk.index = "kibana-audit-log-%Y.%m.%d"
+endpoints = ["https://elasticsearch:9200"]
+tls.verify_certificate = false
+tls.verify_hostname = false
+
+# [sinks.out]
+# inputs = ["tf_kc_log"]
+# type = "console"
+# encoding.codec = "json"
+# target = "stdout"
+
