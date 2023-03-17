@@ -12,7 +12,7 @@ resource "keycloak_group_memberships" "admins" {
   realm_id = keycloak_realm.dummy.id
   group_id = keycloak_group.admins.id
   members = [
-    keycloak_user.admin2.username
+    for user in keycloak_user.admins : user.username
   ]
 }
 
@@ -20,7 +20,7 @@ resource "keycloak_group_memberships" "guests" {
   realm_id = keycloak_realm.dummy.id
   group_id = keycloak_group.guests.id
   members = [
-    keycloak_user.guest2.username
+    for user in keycloak_user.guests : user.username
   ]
 }
 
