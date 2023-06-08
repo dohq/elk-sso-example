@@ -24,25 +24,25 @@ provider "registry.terraform.io/elastic/elasticstack" {
 }
 
 provider "registry.terraform.io/mrparkers/keycloak" {
-  version     = "4.2.0"
+  version     = "4.3.1"
   constraints = ">= 4.0.0"
   hashes = [
-    "h1:/9KtB4EWiB8/Hv2lO29iwTztBQ5H478k0PvCkZSHvJc=",
-    "h1:0Z10wRvT3mrlm10AzTQIQy0h1QN6u8qAnePJKXxmvHw=",
-    "h1:6umVUfZ040P3/1y0pcwoB1wLkmPyyw+CtiIreFLaQ8U=",
-    "h1:FzBeT/W65EtDcxA/Tc5LpgAzp12C3Hskag1TzX3Z31U=",
-    "h1:GpSpJW71S3qiMnKifi8dzPIDuUZfcgboAbUrQ2g3XXs=",
-    "h1:KFjtv6JTU21X6ZQQY3k9p/yP6L8dOb1VsvMhQkdLQzQ=",
-    "h1:KJqhfaQrzVAqhO/U40Tkk05rB0a7s0SjJ2NpBOGq7nQ=",
-    "h1:M0tqhkLO4F7YcoizUZGUpT4JHQtxLt+kX0Nvlk15ro8=",
-    "h1:MhtnSGwk2R2A8oJwXOP5G8/6RamTl9fhMZFG9BxfjJs=",
-    "h1:O5AzyLPniB/VLpv13CHMqNYBBJThpE/MxP1YzNQzL/w=",
-    "h1:Q+iPBhvjMAP+AYMHJlbv3LwBHvJ8CQkoO7vp9TlcO2g=",
-    "h1:SDA1tZLTF1VmEE8E6RMHKR3Ibs/qdFg2XsibDSuqbKI=",
-    "h1:SULV8AVZA9wZxgXDc+y0vQCgQ98Y07lWqLFBcChbNzM=",
-    "h1:VtwsRxzX8N7PWkuqHXIn1nc0Q1ap40MtuB/mDaHvo9s=",
-    "h1:aLeEDzpj0UMEyFq69J6hPOg4AV2fPRRwrfE6VqCSSWo=",
-    "h1:o9SsqLxgPuet6O3mSdo4LrkgR8EXNvkbahSiVs6FhoM=",
-    "h1:qg7AoIgi/lUyrfjmULwKvgRu/+tzyCgYMYrX3EDSAdo=",
+    "h1:6jN599pYh3G8KeZ7F8v8IjM+KMkapLYp42MFCirTkUY=",
+    "h1:80UUAHX8U4ZihZw+0K4e047F/o/5vE+CUVLlIe3fUM4=",
+    "h1:E1XhG44kBYnQ70CSkIMKVEknAkmrueRJgZ1yCFBuaz8=",
+    "h1:MTimxYkKlt8wIuhKX3L8QLPV+z19hMW3XnOmrMe/Wug=",
+    "h1:SzaAIlcJPjyxDANv5HUYIirzCVHfPBEE9+4L6u/d+eo=",
+    "h1:XnkP2nbvJlIGszJ/scwjUYKW4ueDAo/0zqQ5WeuX5E8=",
+    "h1:amZvtzvUaZM+39T+DqNZO6fXZvkst6kn54jCZh6AEJU=",
+    "h1:bvTv9giu/IEu9D1ocT5tbfH6Uaom1IBK8/Zw41iAoWs=",
+    "h1:eiBIhumRdbBko9Civ4hG64DQTD0uoy0JJEEGvBh43bU=",
+    "h1:fKN53mM8Wqgg7MftTNqirnMDyapOHih5E8oTfElphtA=",
+    "h1:gimhu0NLrj13k2esZX/NNVgusluM+WAW8x/aMix47Ic=",
+    "h1:iYMw6G+fa3ZxO0u1yd+AKwhIqbeb6zICCRHCCR34xt8=",
+    "h1:orP+fplDdEexRJblyw1psrifu7ezqu6tJCok7CLmmM4=",
+    "h1:r98kpl2IvJeBry83Dv/Tgra1p5Lf6OU+ysu3iqf+Q8U=",
+    "h1:rpeLQIwUllaQ/EvEC/5/GOzEbJyIUIujd0RYhNZZbg4=",
+    "h1:wPzOI7sgPhEJxeXwS6wb57NkvYeLLA6FnSnX1oHbNI8=",
+    "h1:yIHSZ9Omf4fkccetUAHWJbFCK+FEpdPtEP8kJFhWtJM=",
   ]
 }
