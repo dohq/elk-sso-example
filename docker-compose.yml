@@ -140,7 +140,7 @@ services:
     container_name: httpbin
 
   vector:
-    image: timberio/vector:0.33.0-debian
+    image: timberio/vector:0.33.1-debian
     container_name: vector
     ports:
       - "8686:8686"
