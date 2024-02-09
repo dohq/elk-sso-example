@@ -30,10 +30,6 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
-    volumes:
-    - type: volume
-      source: postgres-data
-      target: /var/lib/postgresql/data
 
   create_certs:
     container_name: create_certs
@@ -56,13 +52,13 @@ services:
       source: ./elasticsearch/instances.yml
       target: /usr/share/elasticsearch/config/certificates/instances.yml
 
-  elasticsearch:
+  es1:
     build:
-      dockerfile: ./elasticsearch/Dockerfile
+      dockerfile: ./elasticsearch/es1/Dockerfile
       args:
         ELK_VER: "${ELK_VER}"
         ELK_KC_CLIENT_SECRET: "${ELK_KC_CLIENT_SECRET}"
-    container_name: elasticsearch
+    container_name: es1
     environment:
       ELASTIC_PASSWORD: changeme
       ES_JAVA_OPTS: -Xms1024m -Xmx1024m
@@ -71,20 +67,65 @@ services:
         soft: -1
         hard: -1
     volumes:
-    - type: volume
-      source: es_data
-      target: /usr/share/elasticsearch/data
     - type: bind
       source: ./certs
       target: /usr/share/elasticsearch/config/certificates
     - type: bind
-      source: ./elasticsearch/elasticsearch.yml
+      source: ./elasticsearch/es1/elasticsearch.yml
       target: /usr/share/elasticsearch/config/elasticsearch.yml
     - type: volume
-      source: elasticsearch-log
+      source: es1-log
       target: /usr/share/elasticsearch/logs
     ports:
     - "9200:9200"
+  es2:
+    build:
+      dockerfile: ./elasticsearch/es2/Dockerfile
+      args:
+        ELK_VER: "${ELK_VER}"
+        ELK_KC_CLIENT_SECRET: "${ELK_KC_CLIENT_SECRET}"
+    container_name: es2
+    environment:
+      ELASTIC_PASSWORD: changeme
+      ES_JAVA_OPTS: -Xms1024m -Xmx1024m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+    - type: bind
+      source: ./certs
+      target: /usr/share/elasticsearch/config/certificates
+    - type: bind
+      source: ./elasticsearch/es2/elasticsearch.yml
+      target: /usr/share/elasticsearch/config/elasticsearch.yml
+    - type: volume
+      source: es2-log
+      target: /usr/share/elasticsearch/logs
+  es3:
+    build:
+      dockerfile: ./elasticsearch/es3/Dockerfile
+      args:
+        ELK_VER: "${ELK_VER}"
+        ELK_KC_CLIENT_SECRET: "${ELK_KC_CLIENT_SECRET}"
+    container_name: es3
+    environment:
+      ELASTIC_PASSWORD: changeme
+      ES_JAVA_OPTS: -Xms1024m -Xmx1024m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+    - type: bind
+      source: ./certs
+      target: /usr/share/elasticsearch/config/certificates
+    - type: bind
+      source: ./elasticsearch/es3/elasticsearch.yml
+      target: /usr/share/elasticsearch/config/elasticsearch.yml
+    - type: volume
+      source: es3-log
+      target: /usr/share/elasticsearch/logs
 
   kibana:
     build:
@@ -96,11 +137,8 @@ services:
     - "5601:5601"
     volumes:
     - type: bind
-      source: ./certs/kibana
+      source: ./certs
       target: /usr/share/kibana/config/certs
-    - type: bind
-      source: ./certs/ca/ca.crt
-      target: /usr/share/kibana/config/certs/ca.crt
     - type: bind
       source: ./kibana/kibana.yml
       target: /usr/share/kibana/config/kibana.yml
@@ -108,7 +146,9 @@ services:
       source: kibana-log
       target: /usr/share/kibana/logs
     depends_on:
-      - elasticsearch
+      - es1
+      - es2
+      - es3
 
   oauth2proxy:
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.5.1
@@ -156,14 +196,14 @@ services:
       source: kibana-log
       target: /usr/share/kibana/logs
       read_only: true
-    - type: volume
-      source: elasticsearch-log
-      target: /usr/share/elasticsearch/logs
-      read_only: true
+  #   - type: volume
+  #     source: elasticsearch-log
+  #     target: /usr/share/elasticsearch/logs
+  #     read_only: true
 
 volumes:
-  postgres-data:
   keycloak-log:
   kibana-log:
-  elasticsearch-log:
-  es_data:
+  es1-log:
+  es2-log:
+  es3-log:

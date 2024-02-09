@@ -3,16 +3,18 @@ server:
   host: 0.0.0.0
   ssl:
     enabled: true
-    certificate: /usr/share/kibana/config/certs/kibana.crt
-    key: /usr/share/kibana/config/certs/kibana.key
+    certificate: /usr/share/kibana/config/certs/kibana/kibana.crt
+    key: /usr/share/kibana/config/certs/kibana/kibana.key
 elasticsearch:
   hosts:
-    - https://elasticsearch:9200
+    - https://es1:9200
+    - https://es2:9200
+    - https://es3:9200
   username: elastic
   password: changeme
   ssl:
     certificateAuthorities:
-      - /usr/share/kibana/config/certs/ca.crt
+      - /usr/share/kibana/config/certs/ca/ca.crt
 xpack:
   security:
     authc.providers:

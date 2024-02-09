@@ -1,7 +1,19 @@
 instances:
-  - name: elasticsearch
+  - name: es1
     dns:
-      - elasticsearch
+      - es1
+      - localhost
+    ip:
+      - 127.0.0.1
+  - name: es2
+    dns:
+      - es2
+      - localhost
+    ip:
+      - 127.0.0.1
+  - name: es3
+    dns:
+      - es3
       - localhost
     ip:
       - 127.0.0.1

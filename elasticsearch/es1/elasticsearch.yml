@@ -1,11 +1,17 @@
 node:
-  name: elasticsearch
+  name: es1
 cluster:
   name: docker-cluster
+  initial_master_nodes:
+    - es1
+    - es2
+    - es3
 bootstrap:
   memory_lock: true
 discovery:
-  type: single-node
+  seed_hosts:
+    - es2
+    - es3
 network:
   host: 0.0.0.0
 path:
@@ -29,15 +35,15 @@ xpack:
       ssl:
         enabled: true
         certificate_authorities: /usr/share/elasticsearch/config/certificates/ca/ca.crt
-        certificate: /usr/share/elasticsearch/config/certificates/elasticsearch/elasticsearch.crt
-        key: /usr/share/elasticsearch/config/certificates/elasticsearch/elasticsearch.key
+        certificate: /usr/share/elasticsearch/config/certificates/es1/es1.crt
+        key: /usr/share/elasticsearch/config/certificates/es1/es1.key
     transport:
       ssl:
         enabled: true
         verification_mode: certificate
         certificate_authorities: /usr/share/elasticsearch/config/certificates/ca/ca.crt
-        certificate: /usr/share/elasticsearch/config/certificates/elasticsearch/elasticsearch.crt
-        key: /usr/share/elasticsearch/config/certificates/elasticsearch/elasticsearch.key
+        certificate: /usr/share/elasticsearch/config/certificates/es1/es1.crt
+        key: /usr/share/elasticsearch/config/certificates/es1/es1.key
     authc:
       token:
         enabled: true

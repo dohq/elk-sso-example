@@ -1,0 +1,65 @@
+node:
+  name: es2
+cluster:
+  name: docker-cluster
+  initial_master_nodes:
+    - es1
+    - es2
+    - es3
+bootstrap:
+  memory_lock: true
+discovery:
+  seed_hosts:
+    - es1
+    - es3
+network:
+  host: 0.0.0.0
+path:
+  logs: /usr/share/elasticsearch/logs
+xpack:
+  license:
+    self_generated:
+      type: trial
+  monitoring:
+    collection:
+      enabled: true
+  security:
+    enabled: true
+    audit:
+      enabled: true
+      logfile:
+        events:
+          include: ["authentication_success"]
+          emit_request_body: true
+    http:
+      ssl:
+        enabled: true
+        certificate_authorities: /usr/share/elasticsearch/config/certificates/ca/ca.crt
+        certificate: /usr/share/elasticsearch/config/certificates/es2/es2.crt
+        key: /usr/share/elasticsearch/config/certificates/es2/es2.key
+    transport:
+      ssl:
+        enabled: true
+        verification_mode: certificate
+        certificate_authorities: /usr/share/elasticsearch/config/certificates/ca/ca.crt
+        certificate: /usr/share/elasticsearch/config/certificates/es2/es2.crt
+        key: /usr/share/elasticsearch/config/certificates/es2/es2.key
+    authc:
+      token:
+        enabled: true
+      realms.oidc.keycloak:
+        order: 2
+        rp.client_id: "kibana"
+        rp.response_type: "code"
+        rp.redirect_uri: "https://localhost:5601/api/security/oidc/callback"
+        op.issuer: "https://localhost:8443/realms/dummy"
+        op.authorization_endpoint: "https://localhost:8443/realms/dummy/protocol/openid-connect/auth"
+        op.token_endpoint: "https://keycloak:8443/realms/dummy/protocol/openid-connect/token"
+        op.jwkset_path: "https://keycloak:8443/realms/dummy/protocol/openid-connect/certs"
+        op.userinfo_endpoint: "https://keycloak:8443/realms/dummy/protocol/openid-connect/userinfo"
+        op.endsession_endpoint: "https://localhost:8443/realms/dummy/protocol/openid-connect/logout"
+        rp.post_logout_redirect_uri: "https://localhost:5601/security/logged_out"
+        claims.principal: preferred_username
+        claims.mail: email
+        claims.groups: groups
+        ssl.verification_mode: none
